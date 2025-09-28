@@ -1,0 +1,22 @@
+[package]
+name = "musiclibrary-vip"
+version = "1.0.0"
+description = "Music Library VIP - Search and discover tracks"
+
+[package.entrypoint]
+cmd = ["python", "-m", "http.server", "8000", "--directory", "dist"]
+
+[fs]
+"dist" = "dist"
+
+[commands.build]
+runner = "https://webc.org/runner/node"
+annotations = { "wasm:env" = "NODE_ENV=production" }
+cmd = ["npm", "install", "&&", "npm", "run", "build"]
+
+[commands.start]
+runner = "https://webc.org/runner/python"
+cmd = ["python", "-m", "http.server", "8000", "--directory", "dist"]
+
+[dependencies]
+python = "3/optimal"

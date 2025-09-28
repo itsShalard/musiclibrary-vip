@@ -6,8 +6,20 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: 'https://musiclibrary-vip.vercel.app',
+  site: 'https://musiclibrary-vip.wasmer.app',
+  base: '/',
+  trailingSlash: 'ignore',
+  build: {
+    format: 'directory'
+  },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: undefined
+        }
+      }
+    }
   }
 });

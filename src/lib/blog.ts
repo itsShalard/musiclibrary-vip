@@ -3,10 +3,11 @@ import { getCollection } from 'astro:content';
 export interface BlogPost {
   slug: string;
   title: string;
-  artist: string;
   genre: string;
+  fileType: string;
   date: string;
-  description: string;
+  artwork_url: string;
+  download_url: string;
   tags: string[];
   content: string;
 }
@@ -16,16 +17,15 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     const posts = await getCollection('blog');
     
     const blogPosts = await Promise.all(
-      posts.map(async (post) => {
-        const { Content } = await post.render();
-        
+      posts.map(async (post) => {        
         return {
           slug: post.slug,
           title: post.data.title,
-          artist: post.data.artist,
           genre: post.data.genre,
+          fileType: post.data.fileType,
           date: post.data.date,
-          description: post.data.description,
+          artwork_url: post.data.artwork_url,
+          download_url: post.data.download_url,
           tags: post.data.tags,
           content: post.body
         } as BlogPost;
@@ -47,9 +47,8 @@ export function searchPosts(posts: BlogPost[], query: string): BlogPost[] {
   
   return posts.filter(post => 
     post.title.toLowerCase().includes(searchTerm) ||
-    post.artist.toLowerCase().includes(searchTerm) ||
     post.genre.toLowerCase().includes(searchTerm) ||
-    post.description.toLowerCase().includes(searchTerm) ||
+    post.fileType.toLowerCase().includes(searchTerm) ||
     post.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
     post.content.toLowerCase().includes(searchTerm)
   );

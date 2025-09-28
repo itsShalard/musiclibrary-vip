@@ -216,7 +216,7 @@ const allPosts = posts.map(post => ({
   </footer>
 
   <!-- Search Script -->
-  <script type="module" define:vars={{ allPosts }}>
+  <script type="module" define:vars={{ allPosts }} is:inline>
     const searchInput = document.getElementById('searchInput');
     const blogGrid = document.getElementById('blogGrid');
     const noResults = document.getElementById('noResults');
